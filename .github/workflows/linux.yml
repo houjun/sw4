@@ -19,10 +19,10 @@ jobs:
       - name: Dependencies
         run: .github/workflows/dependencies-linux.sh
 
-      - name: lib location
-        run: |
-            echo "fftw"
-            ls -lh /usr/lib/x86_64-linux-gnu/fftw*
+      # - name: lib location
+      #   run: |
+            # echo "fftw"
+            # ls -lh /usr/lib/x86_64-linux-gnu/fftw*
       #       echo "fftw lib"
       #       ls -lh /usr/lib/x86_64-linux-gnu/lib
       #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi
