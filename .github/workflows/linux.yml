@@ -39,8 +39,10 @@ jobs:
 
       - name: Build
         run: |
-            make sw4     CXX=mpicc FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
-            make sw4mopt CXX=mpicc FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            make sw4mopt CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            # make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            # make sw4mopt CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
 
       - name: Test SW4
         working-directory: ./pytest
