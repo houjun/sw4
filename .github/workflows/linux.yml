@@ -25,8 +25,12 @@ jobs:
             make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
 
       - name: Test SW4
-        working-directory: ./pytest
-        run: (./test_sw4.py -v 2>&1 | tee true ) > cmd.stdout 2> cmd.stderr
+        working-directory: ./examples/sfile
+        run: mpirun -np 2 ../../optimize_mp/sw4 ./berkeley-s.in
+
+      # - name: Test SW4
+      #   working-directory: ./pytest
+      #   run: (./test_sw4.py -v 2>&1 | tee true ) > cmd.stdout 2> cmd.stderr
         #./test_sw4.py -v
         
       # - name: Test SW4mopt
