@@ -32,7 +32,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build
         run: |
-            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
-            make sw4mopt CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
+            make sw4     CXX=h5pcc FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
+            make sw4mopt CXX=h5pcc FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
 
 
