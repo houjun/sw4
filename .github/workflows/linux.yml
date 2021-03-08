@@ -39,7 +39,9 @@ jobs:
 
       - name: Build
         run: |
-            make sw4     CXX=mpicc FC=mpifc debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi
-            make sw4mopt CXX=mpicc FC=mpifc debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi
+            make sw4     CXX=mpicc FC=gfortran debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            make sw4mopt CXX=mpicc FC=gfortran debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            cd pytest && python3 test_sw4.py
+            cd ../pytest-sw4mopt && python3 test_sw4mopt.py
 
 
