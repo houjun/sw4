@@ -12,6 +12,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
 
     steps:
       - uses: actions/checkout@v2
@@ -19,24 +20,15 @@ jobs:
       - name: Dependencies
         run: .github/workflows/dependencies-linux.sh
 
-      # - name: lib location
-      #   run: |
-            # echo "fftw"
-            # ls -lh /usr/lib/x86_64-linux-gnu/fftw*
-      #       echo "fftw lib"
-      #       ls -lh /usr/lib/x86_64-linux-gnu/lib
-      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi
-      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/include
-      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/lib
-
       - name: Build
         run: |
             make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
 
       - name: Test SW4
         working-directory: ./pytest
-        run: ./test_sw4.py -v
-
+        run: (./test_sw4.py -v 2>&1 | tee true ) > cmd.stdout 2> cmd.stderr
+        #./test_sw4.py -v
+        
       # - name: Test SW4mopt
       #   working-directory: ./pytest-sw4mopt
       #   run: python3 test_sw4mopt.py -d optimize_mp -v
