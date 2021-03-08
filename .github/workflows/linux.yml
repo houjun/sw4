@@ -35,7 +35,7 @@ jobs:
 
       - name: Test SW4
         working-directory: ./pytest
-        run: ./test_sw4.py -m 2 -t 2 -v
+        run: ./test_sw4.py -v
 
       # - name: Test SW4mopt
       #   working-directory: ./pytest-sw4mopt
