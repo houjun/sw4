@@ -21,7 +21,7 @@ jobs:
 
       - name: Build
         run: |
-            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_CXX_FLAGS=-lgfortran HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=no zfp=no prec=double EXTRA_CXX_FLAGS=-lgfortran HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
             #FFTWROOT=/usr/lib/x86_64-linux-gnu/
             # make sw4mopt CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_CXX_FLAGS=-lgfortran HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
             # make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
