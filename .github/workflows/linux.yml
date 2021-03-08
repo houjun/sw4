@@ -25,11 +25,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
       - name: Dependencies
         run: .github/workflows/dependencies-ubuntu.sh
 
-      # Runs a set of commands using the runners shell
+      - name: Versions
+        run: |
+            gcc --version
+            mpicc --version
+            h5pcc --version
+            python3 --version
+            make --version
+
       - name: Build
         run: |
             make sw4     CXX=h5pcc FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
