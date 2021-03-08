@@ -19,17 +19,19 @@ jobs:
       - name: Dependencies
         run: .github/workflows/dependencies-linux.sh
 
-      # - name: lib location
-      #   run: |
-      #       echo "HDF5"
+      - name: lib location
+        run: |
+            echo "fftw include"
+            ls -lh /usr/lib/x86_64-linux-gnu/include
+            echo "fftw lib"
+            ls -lh /usr/lib/x86_64-linux-gnu/lib
       #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi
       #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/include
       #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/lib
 
       - name: Build
         run: |
-            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
-            #FFTWROOT=/usr/lib/x86_64-linux-gnu/
+            make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
 
       - name: Test SW4
         working-directory: ./pytest
