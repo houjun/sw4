@@ -22,7 +22,7 @@ jobs:
 
       - name: Build
         run: |
-            make sw4     CXX=mpicxx FC=gfortran debug=no proj=yes hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
+            make sw4     CXX=mpicxx FC=gfortran debug=no proj=yes hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" EXTRA_CXX_FLAGS=-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
 
       - name: Test SW4
         working-directory: ./examples/sfile
