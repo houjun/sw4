@@ -19,18 +19,17 @@ jobs:
       - name: Dependencies
         run: .github/workflows/dependencies-linux.sh
 
-      - name: lib location
-        run: |
-            echo "HDF5"
-            ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi
-            ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/include
-            ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/lib
-            echo "FFTW"
-            ls -lh /usr/lib/x86_64-linux-gnu/
+      # - name: lib location
+      #   run: |
+      #       echo "HDF5"
+      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi
+      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/include
+      #       ls -lh /usr/lib/x86_64-linux-gnu/hdf5/openmpi/lib
 
       - name: Build
         run: |
             make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=no zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
+            # make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=no zfp=no prec=double EXTRA_CXX_FLAGS="-L/usr/lib/x86_64-linux-gnu/hdf5/openmpi/lib" EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
             #FFTWROOT=/usr/lib/x86_64-linux-gnu/
             # make sw4mopt CXX=mpicxx FC=gfortran debug=no hdf5=yes fftw=yes zfp=no prec=double EXTRA_CXX_FLAGS=-lgfortran HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
             # make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double EXTRA_CXX_FLAGS="-lm -ldl" HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
