@@ -35,10 +35,11 @@ jobs:
             h5pcc --version
             python3 --version
             make --version
+            dpkg -L libhdf5-mpi-dev
 
       - name: Build
         run: |
-            make sw4     CXX=h5pcc FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
-            make sw4mopt CXX=h5pcc FC=gfortran debug=no hdf5=yes zfp=no prec=double -j2
+            make sw4     CXX=mpicc FC=mpifc debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi
+            make sw4mopt CXX=mpicc FC=mpifc debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi
 
 
