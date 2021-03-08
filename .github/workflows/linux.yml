@@ -28,15 +28,6 @@ jobs:
       - name: Dependencies
         run: .github/workflows/dependencies-ubuntu.sh
 
-      - name: Versions
-        run: |
-            gcc --version
-            mpicc --version
-            h5pcc --version
-            python3 --version
-            make --version
-            dpkg -L libhdf5-mpi-dev
-
       - name: Build
         run: |
             make sw4     CXX=mpicxx FC=gfortran debug=no hdf5=yes zfp=no prec=double HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi -j2
