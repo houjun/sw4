@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  SW4 test:
+  SW4:
     runs-on: ubuntu-latest
     # timeout-minutes: 90
 
@@ -27,7 +27,7 @@ jobs:
         working-directory: ./pytest
         run: ./test_sw4.py -m 2 -t 2
 
-  SW4mopt test:
+  SW4mopt:
     runs-on: ubuntu-latest
     # timeout-minutes: 90
 
