@@ -26,7 +26,7 @@ jobs:
       - name: Test SW4
         working-directory: ./pytest
         run: |
-          ./test_sw4.py -m 2
+          ./test_sw4.py -m 2 -t 1
           echo "Output"
           cat hdf5/*.out
           echo "Error log"
@@ -47,4 +47,9 @@ jobs:
 
       - name: Test SW4mopt
         working-directory: ./pytest-sw4mopt
-        run: ./test_sw4mopt.py -d optimize_mp -m 2 -t 2
+        run: |
+          ./test_sw4mopt.py -d optimize_mp -m 2 -t 1
+          echo "Output"
+          cat ./gaussian/*.out
+          echo "Error log"
+          cat ./gaussian/*.err

@@ -382,7 +382,7 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                 
             # end for qq in all_dirs[qq]
 
-        os.chdir('..') # change back to the parent directory
+            os.chdir('..') # change back to the parent directory
 
     # end for all cases in the test_dir
     print('Out of', num_test, 'tests,', num_fail, 'failed,', num_pass, 'passed, and', num_skip, 'skipped')
