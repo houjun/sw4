@@ -306,7 +306,8 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
 
                 # run sw4
                 run_dir = os.getcwd()
-                #print('Running sw4 from directory:', run_dir)
+                if verbose:
+                    print('Running sw4 from directory:', run_dir)
 
 # assign     OMP_NUM_THREADS
                 status = subprocess.run(
@@ -348,8 +349,6 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                     sw4_stdout_file.close()
                     if success == True:
                         success = verify_hdf5.verify(pytest_dir, 1e-5)
-                    if success == False:
-                        nohdf5 = True
                 elif result_file == 'hdf5-sfile.log':
                     import verify_hdf5
                     success = True
@@ -362,8 +361,6 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                     sw4_stdout_file.close()
                     if success == True:
                         success = verify_hdf5.verify_sac_image(pytest_dir, 1e-5)
-                    if success == False:
-                        nohdf5 = True
                 elif result_file == 'energy.log':
                     success = compare_energy(case_dir + sep + result_file, 1e-10, verbose)
                 else:
@@ -380,9 +377,10 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                     print('Test #', num_test, "Input file:", test_case, 'FAILED')
                     num_fail += 1
                 
-            # end for qq in all_dirs[qq]
-
             os.chdir('..') # change back to the parent directory
+            # end for ii in range(num_meshes[qq]):
+
+        # end for qq in all_dirs[qq]
 
     # end for all cases in the test_dir
     print('Out of', num_test, 'tests,', num_fail, 'failed,', num_pass, 'passed, and', num_skip, 'skipped')
