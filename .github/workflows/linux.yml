@@ -26,37 +26,39 @@ jobs:
       - name: Test SW4
         working-directory: ./pytest
         run: |
-          echo "cur dir"
-          ls -lh ./*
-          echo "exe"
-          ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
-          echo "input"
-          cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
-          ./test_sw4.py -m 2 -t 2 -v
-          echo "Output"
-          cat hdf5/*.out
-          echo "Error log"
-          cat hdf5/*.err
+          mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-1.in
+          mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+          # echo "cur dir"
+          # ls -lh ./*
+          # echo "exe"
+          # ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
+          # echo "input"
+          # cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+          # ./test_sw4.py -m 2 -t 2 -v
+          # echo "Output"
+          # cat hdf5/*.out
+          # echo "Error log"
+          # cat hdf5/*.err
 
-  SW4mopt:
-    runs-on: ubuntu-latest
-    # timeout-minutes: 90
+  # SW4mopt:
+  #   runs-on: ubuntu-latest
+  #   # timeout-minutes: 90
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Dependencies
-        run: .github/workflows/dependencies-linux.sh
+  #     - name: Dependencies
+  #       run: .github/workflows/dependencies-linux.sh
        
-      - name: Build SW4mopt
-        run: make sw4mopt CXX=mpicxx FC=gfortran debug=no proj=yes hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" EXTRA_CXX_FLAGS=-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
+  #     - name: Build SW4mopt
+  #       run: make sw4mopt CXX=mpicxx FC=gfortran debug=no proj=yes hdf5=yes fftw=yes zfp=no prec=double EXTRA_LINK_FLAGS="-lgfortran -lhdf5 -llapack" EXTRA_CXX_FLAGS=-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H HDF5ROOT=/usr/lib/x86_64-linux-gnu/hdf5/openmpi FFTWHOME=/usr/lib/x86_64-linux-gnu -j2
 
-      - name: Test SW4mopt
-        working-directory: ./pytest-sw4mopt
-        run: |
-          ./test_sw4mopt.py -d optimize_mp -m 2 -t 2 -v
-          echo "Output"
-          cat ./gaussian/*.out
-          echo "Error log"
-          cat ./gaussian/*.err
+  #     - name: Test SW4mopt
+  #       working-directory: ./pytest-sw4mopt
+  #       run: |
+  #         ./test_sw4mopt.py -d optimize_mp -m 2 -t 2 -v
+  #         echo "Output"
+  #         cat ./gaussian/*.out
+  #         echo "Error log"
+  #         cat ./gaussian/*.err
 
