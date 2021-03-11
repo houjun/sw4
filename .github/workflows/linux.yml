@@ -26,6 +26,17 @@ jobs:
       - name: Test SW4
         working-directory: ./pytest
         run: |
+          echo "cur dir"
+          ls -lh ./*
+          echo "Output"
+          cat ./gaussian/*.out
+          echo "Error log"
+          cat ./gaussian/*.err
+          echo "exe"
+          ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
+          echo "input"
+          cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+
           ./test_sw4.py -m 2 -t 2 -v
           echo "Output"
           cat hdf5/*.out
@@ -47,16 +58,5 @@ jobs:
 
       - name: Test SW4mopt
         working-directory: ./pytest-sw4mopt
-        run: |
-          ./test_sw4mopt.py -d optimize_mp -m 2 -t 2 -v
-          echo "cur dir"
-          ls -lh ./*
-          echo "Output"
-          cat ./gaussian/*.out
-          echo "Error log"
-          cat ./gaussian/*.err
-          echo "exe"
-          ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
-          echo "input"
-          cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+        run: ./test_sw4mopt.py -d optimize_mp -m 2 -t 2 -v
 
