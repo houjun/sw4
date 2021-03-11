@@ -179,7 +179,7 @@ def guess_mpi_cmd(mpi_tasks, omp_threads, cpu_allocation, verbose):
     return mpirun_cmd
 
 #------------------------------------------------
-def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mpi_tasks=0, omp_threads=0, cpu_allocation="", verbose=False, nohdf5=False):
+def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mpi_tasks=0, omp_threads=0, cpu_allocation="", verbose=False, usehdf5=1):
 
     assert sys.version_info >= (3,5) # named tuples in Python version >=3.3
 
@@ -261,7 +261,11 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
         result_file = all_results[qq]
 
         # skip HDF5 test if specified
-        if 'hdf5' in base_case and nohdf5 == True:
+        if 'hdf5' in base_case and usehdf5 == 0:
+            num_skip = num_skip+1
+            num_test = num_test+1
+            print('Test #', num_test, "Input file:", base_case+'-'+str(1)+'.in', 'SKIPPED')
+        elif 'hdf5' not in base_case and usehdf5 == 2:
             num_skip = num_skip+1
             num_test = num_test+1
             print('Test #', num_test, "Input file:", base_case+'-'+str(1)+'.in', 'SKIPPED')
@@ -392,7 +396,7 @@ if __name__ == "__main__":
     # default arguments
     testing_level=0
     verbose=False
-    nohdf5=False
+    usehdf5=1
     mpi_tasks=0 # machine dependent default
     omp_threads=0 #no threading by default
     cpu_allocation=""
@@ -405,12 +409,11 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--ompthreads", type=int, help="number of omp threads per task")
     parser.add_argument("-d", "--sw4_exe_dir", help="name of directory for sw4 executable", default="optimize_mp")
     parser.add_argument("-p", "--pytest_dir", help="full path to the directory of pytest (/path/sw4/pytest)", default="none")
-    parser.add_argument("-n", "--nohdf5", help="disable HDF5 test", action="store_true")
+    parser.add_argument("-u", "--usehdf5", type=int, choices=[0, 1, 2], help="run tests with, 0 no HDF5, 1 with HDF5, 2 only HDF5")
     parser.add_argument("-A","--cpu_allocation", help="name of cpu bank/allocation",default="")
     args = parser.parse_args()
-    if args.nohdf5:
-        #print("HDF5 test disabled")
-        nohdf5=True
+    if args.usehdf5:
+        usehdf5 = 0
     if args.verbose:
         #print("verbose mode enabled")
         verbose=True
@@ -433,7 +436,7 @@ if __name__ == "__main__":
         #print("cpu_allocation specified=", args.cpu_allocation)
         cpu_allocation=args.cpu_allocation
 
-    if not main_test(sw4_exe_dir, pytest_dir, testing_level, mpi_tasks, omp_threads, cpu_allocation, verbose, nohdf5):
+    if not main_test(sw4_exe_dir, pytest_dir, testing_level, mpi_tasks, omp_threads, cpu_allocation, verbose, usehdf5):
         print("test_sw4 was unsuccessful")
         # sys.exit(-1)
 

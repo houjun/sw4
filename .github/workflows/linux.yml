@@ -26,9 +26,9 @@ jobs:
       - name: Test SW4
         working-directory: ./pytest
         run: |
-          cd hdf5
-          mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-1.in
-          mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+          # cd hdf5
+          # mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-1.in
+          # mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
           # echo "cur dir"
           # ls -lh ./*
           # echo "exe"
@@ -36,7 +36,8 @@ jobs:
           # echo "input"
           # cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
           cd ..
-          ./test_sw4.py -m 2 -t 2 -v
+          ./test_sw4.py -m 2 -t 2 -v -u 0
+          ./test_sw4.py -m 2 -t 2 -v -u 2
           # echo "Output"
           # cat hdf5/*.out
           # echo "Error log"
