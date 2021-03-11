@@ -3,7 +3,7 @@
 # Arguments:
 # -h: help, -v: verbose mode -l testing level, -m mpi-tasks, -d sw4-exe-dir -t omp-threads
 
-import os, sys, argparse, subprocess
+import os, sys, argparse, subprocess, time
 
 #----(Currently not used)--------------------------------------------
 def run_checks(checks):
@@ -378,6 +378,7 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                     num_fail += 1
                 
             os.chdir('..') # change back to the parent directory
+            time.sleep(5)
             # end for ii in range(num_meshes[qq]):
 
         # end for qq in all_dirs[qq]

@@ -35,6 +35,7 @@ jobs:
           # ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
           # echo "input"
           # cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
+          cd ..
           ./test_sw4.py -m 2 -t 2 -v
           # echo "Output"
           # cat hdf5/*.out
