@@ -260,9 +260,6 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
         base_case = all_cases[qq]
         result_file = all_results[qq]
 
-        if base_case == 'loh1-h100-mr-hdf5':
-            print("  Running HDF5 test, may take a few minutes ...")
-
         # skip HDF5 test if specified
         if 'hdf5' in base_case and nohdf5 == True:
             num_skip = num_skip+1
@@ -288,7 +285,7 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                 sw4_input_file = reference_dir + sep + test_dir + sep + test_case
                 #print('sw4_input_file = ', sw4_input_file)
 
-                sw4_stdout_file = case_dir + '.out'
+                # sw4_stdout_file = case_dir + '.out'
                 
                 local_dir = pytest_dir + sep + test_dir
                 #print('local_dir = ', local_dir)
@@ -308,12 +305,13 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                 run_dir = os.getcwd()
                 if verbose:
                     print('Running sw4 from directory:', run_dir)
+                    print('run_cmd=', run_cmd)
 
 # assign     OMP_NUM_THREADS
                 status = subprocess.run(
                     run_cmd,
                     stdout=sw4_stdout_file,
-                    stderr=sw4_stderr_file,
+                    stderr=sw4_stderr_file
                 )
 
                 sw4_stdout_file.close()
@@ -340,25 +338,25 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                 if result_file == 'hdf5.log':
                     import verify_hdf5
                     success = True
-                    sw4_stdout_file = open(case_dir + '.out', 'r')
-                    for line in sw4_stdout_file:
+                    sw4_stdout_file_tmp = open(case_dir + '.out', 'r')
+                    for line in sw4_stdout_file_tmp:
                         if "Error" in line or "not compiled with HDF5" in line or "without sw4 compiled with HDF5" in line:
                             success = False
                             print('  SW4 is not compiled with HDF5 library!')
                             break;
-                    sw4_stdout_file.close()
+                    sw4_stdout_file_tmp.close()
                     if success == True:
                         success = verify_hdf5.verify(pytest_dir, 1e-5)
                 elif result_file == 'hdf5-sfile.log':
                     import verify_hdf5
                     success = True
-                    sw4_stdout_file = open(case_dir + '.out', 'r')
-                    for line in sw4_stdout_file:
+                    sw4_stdout_file_tmp = open(case_dir + '.out', 'r')
+                    for line in sw4_stdout_file_tmp:
                         if "Error" in line or "not compiled with HDF5" in line or "without sw4 compiled with HDF5" in line:
                             success = False
                             print('  SW4 is not compiled with HDF5 library!')
                             break;
-                    sw4_stdout_file.close()
+                    sw4_stdout_file_tmp.close()
                     if success == True:
                         success = verify_hdf5.verify_sac_image(pytest_dir, 1e-5)
                 elif result_file == 'energy.log':
