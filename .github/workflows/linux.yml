@@ -26,23 +26,12 @@ jobs:
       - name: Test SW4
         working-directory: ./pytest
         run: |
-          # cd hdf5
-          # mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-1.in
-          # mpirun -np 2 /home/runner/work/sw4/sw4/optimize_mp/sw4 /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
-          # echo "cur dir"
-          # ls -lh ./*
-          # echo "exe"
-          # ls -lh /home/runner/work/sw4/sw4/optimize_mp/sw4
-          # echo "input"
-          # cat /home/runner/work/sw4/sw4/pytest/reference/hdf5/loh1-h100-mr-hdf5-sfile-1.in
-          # cd ..
+          # All tests except HDF5 ones 
+          ./test_sw4.py -m 2 -t 2 -v -u 0
+          # Run 1st HDF5 test
           ./test_sw4.py -m 2 -t 2 -v -u 1
+          # Run 2nd HDF5 test
           ./test_sw4.py -m 2 -t 2 -v -u 2
-          # ./test_sw4.py -m 2 -t 2 -v -u 0
-          # echo "Output"
-          # cat hdf5/*.out
-          # echo "Error log"
-          # cat hdf5/*.err
 
   # SW4mopt:
   #   runs-on: ubuntu-latest
