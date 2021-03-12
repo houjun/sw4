@@ -3,7 +3,7 @@
 # Arguments:
 # -h: help, -v: verbose mode -l testing level, -m mpi-tasks, -d sw4-exe-dir -t omp-threads
 
-import os, sys, argparse, subprocess, time
+import os, sys, argparse, subprocess
 
 #----(Currently not used)--------------------------------------------
 def run_checks(checks):
@@ -261,11 +261,7 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
         result_file = all_results[qq]
 
         # skip HDF5 test if specified
-        if 'hdf5' in base_case and usehdf5 == 0:
-            num_skip = num_skip+1
-            num_test = num_test+1
-            print('Test #', num_test, "Input file:", base_case+'-'+str(1)+'.in', 'SKIPPED')
-        elif 'hdf5' not in base_case and usehdf5 == 2:
+        if ('hdf5' not in base_case and usehdf5 != 3 and usehdf5 != 0) or (base_case == 'loh1-h100-mr-hdf5' and (usehdf5 == 0 or usehdf5 == 2)) or (base_case == 'loh1-h100-mr-hdf5-sfile' and (usehdf5 == 0 or usehdf5 == 1)):
             num_skip = num_skip+1
             num_test = num_test+1
             print('Test #', num_test, "Input file:", base_case+'-'+str(1)+'.in', 'SKIPPED')
@@ -380,7 +376,6 @@ def main_test(sw4_exe_dir="optimize_mp", pytest_dir ="none", testing_level=0, mp
                     num_fail += 1
                 
             os.chdir('..') # change back to the parent directory
-            time.sleep(5)
             # end for ii in range(num_meshes[qq]):
 
         # end for qq in all_dirs[qq]
@@ -396,7 +391,7 @@ if __name__ == "__main__":
     # default arguments
     testing_level=0
     verbose=False
-    usehdf5=1
+    usehdf5=3
     mpi_tasks=0 # machine dependent default
     omp_threads=0 #no threading by default
     cpu_allocation=""
@@ -409,7 +404,7 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--ompthreads", type=int, help="number of omp threads per task")
     parser.add_argument("-d", "--sw4_exe_dir", help="name of directory for sw4 executable", default="optimize_mp")
     parser.add_argument("-p", "--pytest_dir", help="full path to the directory of pytest (/path/sw4/pytest)", default="none")
-    parser.add_argument("-u", "--usehdf5", type=int, choices=[0, 1, 2], help="run tests with, 0 no HDF5, 1 with HDF5, 2 only HDF5")
+    parser.add_argument("-u", "--usehdf5", type=int, choices=[0, 1, 2, 3], help="run HDF5 tests with, 0 no HDF5, 1 first HDF5 case, 2 second case, 3 both cases")
     parser.add_argument("-A","--cpu_allocation", help="name of cpu bank/allocation",default="")
     args = parser.parse_args()
 
@@ -419,6 +414,8 @@ if __name__ == "__main__":
         usehdf5=1
     elif args.usehdf5 == 2:
         usehdf5=2
+    elif args.usehdf5 == 3:
+        usehdf5=3
     if args.verbose:
         #print("verbose mode enabled")
         verbose=True
