@@ -412,14 +412,19 @@ if __name__ == "__main__":
     parser.add_argument("-u", "--usehdf5", type=int, choices=[0, 1, 2], help="run tests with, 0 no HDF5, 1 with HDF5, 2 only HDF5")
     parser.add_argument("-A","--cpu_allocation", help="name of cpu bank/allocation",default="")
     args = parser.parse_args()
-    if args.usehdf5:
-        usehdf5 = 0
+
+    if args.usehdf5 == 0:
+        usehdf5=0
+    elif args.usehdf5 == 1:
+        usehdf5=1
+    elif args.usehdf5 == 2:
+        usehdf5=2
     if args.verbose:
         #print("verbose mode enabled")
         verbose=True
     if args.level:
         #print("Testing level specified=", args.level)
-        testing_level=args.level
+        testing_level = args.level
     if args.mpitasks:
         #print("MPI-tasks specified=", args.mpitasks)
         if args.mpitasks > 0: mpi_tasks=args.mpitasks
