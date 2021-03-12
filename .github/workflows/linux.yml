@@ -27,11 +27,11 @@ jobs:
         working-directory: ./pytest
         run: |
           # All tests except HDF5 ones 
-          ./test_sw4.py -m 2 -t 2 -v -u 0
+          ./test_sw4.py -m 2 -t 2 -u 0
           # Run 1st HDF5 test
-          ./test_sw4.py -m 2 -t 2 -v -u 1
+          ./test_sw4.py -m 2 -t 2 -u 1
           # Run 2nd HDF5 test
-          ./test_sw4.py -m 2 -t 2 -v -u 2
+          ./test_sw4.py -m 2 -t 2 -u 2
 
   # SW4mopt:
   #   runs-on: ubuntu-latest
